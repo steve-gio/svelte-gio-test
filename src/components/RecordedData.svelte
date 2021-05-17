@@ -79,7 +79,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    box-shadow:inset 0 15px 5px -16px white;
   }
 
   button{

@@ -1,17 +1,53 @@
 <script>
   import { registerUser } from '../services/firebaseService'
+  import { fade } from 'svelte/transition';
   
   let user = {
     name: '',
     email: '',
     imageLink: ''
   }
+  let errors = {
+    name: '',
+    email: '',
+    imageLink: '',
+  }
+  let valid = false
+
 
   const submitForm = () => {
-    
-    registerUser(user)
-    console.log(user)
-    user = { name: '', email: '', imageLink: '' }
+    valid = true
+
+    // Validate name
+    if(user.name.trim().length < 5) {
+      valid = false
+      errors.name = 'Name must be at least 5 characters long'
+    } else {
+      errors.name = ''
+    }
+
+    // Validate email
+    if(user.email.trim().length < 1) {
+      valid = false
+      errors.email = 'Email cannot be empty'
+    } else {
+      errors.email = ''
+    }
+
+    // Validate imageLink
+    if(user.imageLink.trim().length < 1) {
+      valid = false
+      errors.imageLink = 'Image link cannot be empty'
+    } else {
+      errors.imageLink = ''
+    }
+
+    if(valid){
+      registerUser(user)
+      console.log(user)
+      user = { name: '', email: '', imageLink: '' }
+    }
+
   }
 
 </script>
@@ -21,9 +57,25 @@
 
 <form class="form-container" on:submit|preventDefault={submitForm} >  
   <p class="form-title">ENTER THE DATA <br> TO THE REGISTER</p>
-  <input bind:value={user.name} class="form-input" placeholder="User name" />
-  <input bind:value={user.email} class="form-input" placeholder="Email" />
+  
+  {#if errors.name}
+  <div in:fade class="error">{ errors.name }</div>
+  {/if}
+
+  <input bind:value={user.name} type="text" class="form-input" placeholder="User name" />
+
+  {#if errors.email}
+  <div in:fade class="error">{ errors.email }</div>
+  {/if}
+
+  <input bind:value={user.email} type="email" class="form-input" placeholder="Email" />
+
+  {#if errors.imageLink}
+  <div in:fade class="error">{ errors.imageLink }</div>
+  {/if}
+
   <input bind:value={user.imageLink} class="form-input" placeholder="Image Link" />
+
   <button type='submit'>SEND</button>
 </form>
 <div class="triangle"></div>
@@ -86,6 +138,12 @@
 
   button:hover{
     background-color: #e6e6e6;
+  }
+
+  .error{
+    color: white;
+    font-weight: bolder;
+    font-size: smaller;
   }
 
 </style>
