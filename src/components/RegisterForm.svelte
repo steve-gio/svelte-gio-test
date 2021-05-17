@@ -14,7 +14,12 @@
   }
   let valid = false
 
-
+  /**
+   * @param user {object}
+   * @param errors {object}
+   * @param valid {bool}
+   * @description submit function with some basic validation
+   */
   const submitForm = () => {
     valid = true
 

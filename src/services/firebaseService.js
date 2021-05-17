@@ -7,7 +7,12 @@ import { db } from "../config/firebaseConfig";
  * @description registering new user into the database
  */
 const registerUser = (user) => {
-  db.collection("users").doc().set(user);
+  db.collection("users")
+    .doc()
+    .set({
+      ...user,
+      createdAt: Date.now(),
+    });
 };
 
 export { registerUser };

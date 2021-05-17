@@ -8,7 +8,7 @@
   /**
  * @description gets all the users registered in the database and assigns the to the users variable
  */
-  db.collection("users").onSnapshot((querySnapshot) => {
+  db.collection("users").orderBy("createdAt", "desc").limit(10).onSnapshot((querySnapshot) => {
     let docs = []
     querySnapshot.forEach((doc) => {
       docs.push(doc.data())
