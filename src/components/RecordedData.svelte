@@ -23,7 +23,7 @@
   <p class="list-title">UPDATE <br> RECORDED DATA</p>
   <div class='grid-container' >
     {#each users as user}
-        <UserCard name={user.name} email={user.email} />
+        <UserCard name={user.name} email={user.email} imageLink={user.imageLink} />
     {:else}
       <div></div>
       <div class='loader'></div>
