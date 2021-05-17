@@ -1,6 +1,6 @@
 <script>
-
   import { db } from "../config/firebaseConfig";
+  import { getLastRegisteredUsers } from '../services/firebaseService'
   import UserCard from "./UserCard.svelte"
 
   let users = []
@@ -16,6 +16,13 @@
     users = [...docs]
   })
 
+  const reFetch = async () => {
+    users = []
+    let docs = await getLastRegisteredUsers()
+    users = [...docs]
+  }
+
+  reFetch()
 
 </script>
 
@@ -30,7 +37,7 @@
     {/each}
   </div>
   <div class="button-container">
-    <button>
+    <button on:click={reFetch}>
       UPDATE
     </button>
   </div>

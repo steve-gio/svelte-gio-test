@@ -15,4 +15,24 @@ const registerUser = (user) => {
     });
 };
 
-export { registerUser };
+/**
+
+ * @description Retrieves last 10 users added into the database
+ */
+const getLastRegisteredUsers = async () => {
+  let docs = await db
+    .collection("users")
+    .orderBy("createdAt", "desc")
+    .limit(10)
+    .get()
+    .then((querySnapshot) => {
+      let data = [];
+      querySnapshot.forEach((doc) => {
+        data.push(doc.data());
+      });
+      return data;
+    });
+  return docs;
+};
+
+export { registerUser, getLastRegisteredUsers };
